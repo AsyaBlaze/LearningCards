@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Groups</title>
+    <link type="text/css" rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<a href="/cards" style="color: brown">↩ Go back to cards</a>
+<br> <br>
+
+    <div th:each="group : ${groups}">
+        <a th:href="@{/groups/{id}(id=${group.getId()})}">
+            <h th:text="${group.groupName}"></h>
+        </a>
+    </div>
+    <br>
+    <a href="/groups/add">Create new group</a>
+
+
+</body>
+</html>

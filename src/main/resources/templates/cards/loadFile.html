@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Load file</title>
+    <link type="text/css" rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <a href="/cards" style="color: brown">↩ Go back to cards</a>
+    <br> <br>
+
+    <i>To import cards from a file, you need to have a similar look:</i>
+    <img th:src="@{/images/example.jpg}">
+    <br><br>
+
+    <form th:action="@{/cards/import}" method="post" enctype="multipart/form-data">
+        <input type="file" th:name="file" />
+        <input th:type="submit" value="Import" />
+    </form>
+
+    <form th:action="@{/cards/import}" method="post" enctype="multipart/form-data">
+        <input type="file" th:name="file" />
+        <input th:type="submit" value="Import" />
+    </form>
+
+</body>
+</html>

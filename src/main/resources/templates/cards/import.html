@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Group</title>
+    <link type="text/css" rel="stylesheet" href="/style.css">
+</head>
+<body>
+<a href="/cards" style="color: brown">↩ Go back to cards</a>
+<br> <br>
+
+    <div th:if="${successfullyQuality} > 0">
+        <b>Import finished</b>
+        <i th:text="'Successfully added: ' + ${successfullyQuality}">.</i>
+        <br>
+    </div>
+    <div th:if="${failedQuality} > 0">
+        <i th:text="'Failed to add: ' + ${failedQuality}">.</i>
+        <br>
+        <ul>
+            <li th:each="word : ${failed}" th:text="${word}"></li>
+        </ul>
+    </div>
+    <div th:if="${message}">
+        <center><b style="font-size: 23px">Error</b>
+        <br>
+        <p style="color: darkred; font-size: 18px" th:text="${message}"></p></center>
+    </div>
+</body>
+</html>

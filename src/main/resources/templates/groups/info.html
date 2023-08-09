@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Group</title>
+    <link type="text/css" rel="stylesheet" href="/style.css">
+</head>
+<body>
+<a href="/groups" style="color: brown">↩ Go back to all groups</a>
+<br> <br>
+    <form th:method="GET" th:object="${group}">
+        <label th:text="'Name of the group:  ' + ${group.getGroupName()}">here</label>
+    </form>
+    <br> <br>
+    <div th:if="${group.getCards().size() > 0}">
+        <b>Words in this group: </b>
+        <ul>
+            <li th:each="card : ${group.getCards()}" th:text="${card.word}">here</li>
+        </ul>
+    </div>
+    <div th:if="${group.getCards().size() == 0}">
+        <i>There is no words in this group yet</i>
+    </div>
+
+    <br>
+    <div>
+        <form th:method="GET" th:action="@{/groups/{id}/edit (id=${group.getId()})}">
+            <input type="submit" value="Edit"/>
+        </form>
+    </div>
+
+    <div class="divD">
+        <form th:method="DELETE" th:action="@{/groups/{id}/delete (id=${group.getId()})}">
+            <input type="submit" value="Delete"/>
+        </form>
+    </div>
+
+</body>
+</html>

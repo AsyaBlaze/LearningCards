@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new group</title>
+    <link type="text/css" rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/groups/add}" th:object="${gr}">
+    <label for="group">Enter the name of a group: </label>
+    <input type="text" th:field="${gr.groupName}" id="group"/>
+    <div style="color:red" th:if="${#fields.hasErrors('groupName')}" th:errors="*{groupName}">group error</div>
+    <br/>
+    <input type="submit" value="Create!"/>
+</form>
+
+</body>
+</html>

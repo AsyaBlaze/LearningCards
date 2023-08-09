@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Card</title>
+    <link type="text/css" rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <a href="/cards" style="color: brown">↩ Go back to all cards</a>
+    <br> <br>
+        <form th:method="GET" th:object="${card}">
+            <button onfocus="unhide()">
+                <div>
+                    <b id="word" style="font-size: 20px" th:text="${card.word}">word</b> <br><br>
+                    <b id="translation" style="font-size: 20px" th:text="${card.translation}">tr</b>
+                </div>
+            </button>
+            <div th:if="${card.transcription} != null">
+                <br><br>
+                <label>Transcription:</label>
+                <br>
+                <b style="font-size: 16px" th:text="'[' + ${card.transcription} + ']'">tr</b>
+            </div>
+            <div th:if="${card.examples} != null">
+                <br><br>
+                <label>Example of usage:</label>
+                <br>
+                <b style="font-size: 16px" th:text="${card.examples}">ex</b>
+            </div>
+
+        </form>
+
+    <br>
+    <div>
+        <form th:method="POST" th:action="@{/cards/{id}/assignLearned(id=${card.getId()})}">
+            <label>Is learned: </label>
+            <select th:object="${card}" th:field="${card.learned}">
+                <option th:value="true">Yes</option>
+                <option th:value="false">Not yet</option>
+            </select>
+            <input type="submit" value="Set">
+        </form>
+    </div>
+    <br>
+        <div th:if="${groupsList}">
+            <form th:method="POST" th:action="@{/cards/{id}/assignGroup(id=${card.getId()})}" th:object="${cardFor}">
+                <label for="selectGroup">Group: </label>
+                <select id="selectGroup" th:field="*{groups}" multiple="multiple">
+                    <option th:each="gr : ${groupsList}" th:value="${gr.id}" th:text="${gr.getGroupName()}">g</option>
+                </select>
+                <input type="submit" value="Add to groups!"/>
+            </form>
+        </div>
+        <div th:if="${groups}">
+            <b>In the group(s): </b>
+            <ul>
+                <li th:each="gr : ${groups}" th:text="${gr.groupName}">here</li>
+            </ul>
+        </div>
+
+    <br>
+    <div>
+        <form th:method="GET" th:action="@{/cards/{id}/edit (id=${card.getId()})}">
+            <input type="submit" value="Edit"/>
+        </form>
+    </div>
+
+    <div class="divD">
+        <form th:method="DELETE" th:action="@{/cards/{id}/delete (id=${card.getId()})}">
+            <input type="submit" value="Delete"/>
+        </form>
+    </div>
+
+</body>
+</html>

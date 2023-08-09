@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new card</title>
+    <link type="text/css" rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/cards/add}" th:object="${card}">
+    <label for="word">Enter word: </label>
+    <input type="text" th:field="*{word}" id="word"/>
+    <div style="color:red; font-style: italic" th:if="${#fields.hasErrors('word')}" th:errors="*{word}">word error</div>
+    <br/>
+    <label for="translation">Enter translation: </label>
+    <input type="text" th:field="*{translation}" id="translation"/>
+    <div style="color:red; font-style: italic" th:if="${#fields.hasErrors('translation')}" th:errors="*{translation}">translation error</div>
+    <br/>
+    <label for="examples">Enter examples of usage(optionally): </label>
+    <input type="text" th:field="*{examples}" id="examples"/>
+    <div style="color:red" th:if="${#fields.hasErrors('examples')}" th:errors="*{examples}">examples error</div>
+    <br/>
+    <label for="transcription">Enter transcription(optionally)</label>
+    <input type="text" th:field="*{transcription}" id="transcription"/>
+    <div style="color:red" th:if="${#fields.hasErrors('transcription')}" th:errors="*{transcription}">transcription error</div>
+    <br/>
+    <label for="selectGroup">Group: </label>
+    <select id="selectGroup" th:field="${card.groups}" multiple="multiple">
+        <option th:each="group : ${groups}" th:value="${group.getGroupName()}" th:text="${group.getGroupName()}">g</option>
+    </select>
+    <br>
+    <input type="submit" value="Create!"/>
+</form>
+
+</body>
+</html>

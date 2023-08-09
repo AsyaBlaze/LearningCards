@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+    <link type="text/css" rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<form th:method="PATCH" th:action="@{/groups/{id}(id=${group.getId()})}" th:object="${group}">
+    <label for="group">Enter the name of a group: </label>
+    <input type="text" th:field="*{groupName}" id="group"/>
+    <div style="color:red" th:if="${#fields.hasErrors('groupName')}" th:errors="*{groupNme}">group error</div>
+    <br>
+    <input type="submit" value="Edit!"/>
+</form>
+
+</body>
+</html>

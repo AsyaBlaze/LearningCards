@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cards</title>
+    <link type="text/css" rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<h4>Filter by:</h4>
+
+<a style="padding-right: 15px" href="/cards">All cards</a>
+<a th:href="${@replaceOrAddParam.apply('isLearned', 'false')}">To learn</a>
+<a th:href="${@replaceOrAddParam.apply('isLearned', 'true')}">Already learn</a>
+
+<br>
+<hr>
+<a style="padding-right: 15px; word-wrap: break-word" th:each="group : ${groups}" th:text="${group.groupName}" th:href="${@replaceOrAddParam.apply('group', group.groupName)}">g</a>
+<br>
+<hr>
+<a style="padding-right: 15px; font-weight: bold; color: cadetblue" href="/groups">Edit groups</a>
+
+<br> <br>
+<div th:each="card : ${cards}">
+    <a th:style="${card.isLearned()}? 'color:green;'" th:href="@{/cards/{id}(id=${card.getId()})}">
+            <h th:text="${card.getWord()}"></h>
+    </a>
+</div>
+<br>
+<b><a href="/cards/add">Create new card</a></b>
+<br>
+<b><a href="/cards/addCardsFromFile">Add cards from Excel file</a></b>
+
+</body>
+</html>
