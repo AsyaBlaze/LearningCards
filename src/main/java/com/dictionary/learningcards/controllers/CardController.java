@@ -78,7 +78,6 @@ public class CardController {
     public String update(@PathVariable int id,
                          @ModelAttribute("card") @Valid Card card,
                          BindingResult bindingResult) {
-        // TODO solve problem with groups  cardValidator.validate(card, bindingResult);
         if (bindingResult.hasErrors()) {
             return "cards/edit";
         }
@@ -102,8 +101,6 @@ public class CardController {
     @PostMapping("/add")
     public String createCard(@ModelAttribute("card") @Valid Card card,
                              BindingResult bindingResult) {
-
-        // TODO solve problem with groups cardValidator.validate(card, bindingResult);
         if (bindingResult.hasErrors()) {
             return "cards/new";
         }
@@ -212,7 +209,6 @@ public class CardController {
                           @PathVariable int id) {
         Card card1 = cardService.findById(id);
         card1.setGroups(card.getGroups());
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!" + card1 + "!!!!!!!!!!!!!!!!!!!!!!");
         cardService.update(id, card1);
         return "redirect:/cards";
     }
