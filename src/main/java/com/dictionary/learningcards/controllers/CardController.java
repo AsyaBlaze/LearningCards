@@ -2,6 +2,7 @@ package com.dictionary.learningcards.controllers;
 
 import com.dictionary.learningcards.models.Card;
 import com.dictionary.learningcards.models.Group;
+import com.dictionary.learningcards.security.UserDetails;
 import com.dictionary.learningcards.services.CardService;
 import com.dictionary.learningcards.services.GroupService;
 import com.dictionary.learningcards.util.CardValidator;
@@ -11,6 +12,8 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -159,7 +162,7 @@ public class CardController {
             }
             tempCardsList.add(cardInRow);
         }
-        // TODO BATCH-REQUEST
+
         List<String> failed = new ArrayList<>();
         for (Card card : tempCardsList) {
             try {
@@ -212,7 +215,6 @@ public class CardController {
                           @PathVariable int id) {
         Card card1 = cardService.findById(id);
         card1.setGroups(card.getGroups());
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!" + card1 + "!!!!!!!!!!!!!!!!!!!!!!");
         cardService.update(id, card1);
         return "redirect:/cards";
     }

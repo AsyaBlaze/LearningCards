@@ -10,7 +10,7 @@
 <h4>Filter by:</h4>
 
 <a style="padding-right: 15px" href="/cards">All cards</a>
-<a th:href="${@replaceOrAddParam.apply('isLearned', 'false')}">To learn</a>
+<a style="padding-right: 15px" th:href="${@replaceOrAddParam.apply('isLearned', 'false')}">To learn</a>
 <a th:href="${@replaceOrAddParam.apply('isLearned', 'true')}">Already learn</a>
 
 <br>
