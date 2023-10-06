@@ -24,6 +24,12 @@ public class Group {
     @ManyToMany(mappedBy = "groups")
     private List<Card> cards;
 
+    @ManyToOne
+    @JoinTable(name = "users_groups",
+            joinColumns = @JoinColumn(name = "id_group"),
+            inverseJoinColumns = @JoinColumn(name = "id_user"))
+    private User owner;
+
     public Group() {}
 
     public Group(String groupName) {

@@ -81,7 +81,7 @@ public class CardController {
     public String update(@PathVariable int id,
                          @ModelAttribute("card") @Valid Card card,
                          BindingResult bindingResult) {
-        // TODO solve problem with groups  cardValidator.validate(card, bindingResult);
+        cardValidator.validate(card, bindingResult);
         if (bindingResult.hasErrors()) {
             return "cards/edit";
         }
@@ -105,8 +105,7 @@ public class CardController {
     @PostMapping("/add")
     public String createCard(@ModelAttribute("card") @Valid Card card,
                              BindingResult bindingResult) {
-
-        // TODO solve problem with groups cardValidator.validate(card, bindingResult);
+        cardValidator.validate(card, bindingResult);
         if (bindingResult.hasErrors()) {
             return "cards/new";
         }
@@ -127,7 +126,7 @@ public class CardController {
 
     @PostMapping("/import")
     public String importCards(@RequestParam("file") MultipartFile reapExcelDataFile,
-                              Model model) throws IOException {
+                              Model model) throws Exception {
         List<Card> tempCardsList = new ArrayList<>();
         if (reapExcelDataFile.getOriginalFilename() == null ||
                 (!reapExcelDataFile.getOriginalFilename().endsWith(".xlsx") &&
@@ -149,12 +148,12 @@ public class CardController {
 
             cardInRow.setWord(row.getCell(0).getStringCellValue());
             cardInRow.setTranslation(row.getCell(1).getStringCellValue());
-            String example = row.getCell(2) != null ? row.getCell(2).getStringCellValue() : null;
+            String example = row.getCell(2) != null && !row.getCell(2).getStringCellValue().isBlank() ? row.getCell(2).getStringCellValue() : null;
             cardInRow.setExamples(example);
-            String transcription = row.getCell(3) != null ? row.getCell(3).getStringCellValue() : null;
+            String transcription = row.getCell(3) != null && !row.getCell(3).getStringCellValue().isBlank() ? row.getCell(3).getStringCellValue() : null;
             cardInRow.setTranscription(transcription);
             String group = row.getCell(4) != null ? row.getCell(4).getStringCellValue() : null;
-            if (group != null) {
+            if (group != null && !group.isBlank()) {
                  if (groupService.findGroupByName(group) == null) {
                      groupService.save(new Group(group));
                  }
@@ -192,10 +191,8 @@ public class CardController {
         List<Group> groups = card.getGroups();
         if (groups.isEmpty()) {
             model.addAttribute("groupsList", groupService.findAll());
-            System.out.println(model.getAttribute("groupsList"));
         } else {
             model.addAttribute("groups", groups);
-            System.out.println(groups);
         }
         return "cards/info";
     }
@@ -203,10 +200,7 @@ public class CardController {
     @PostMapping("/{id}/assignLearned")
     private String assignLearned(@ModelAttribute("cardFor") Card card,
         @PathVariable int id) {
-        Card card1 = cardService.findById(id);
-        card1.setLearned(card.isLearned());
-        System.out.println(card1);
-        cardService.update(id, card1);
+        cardService.setLearned(id, card.isLearned());
         return "redirect:/cards";
     }
 

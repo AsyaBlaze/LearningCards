@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Personal account</title>
+    <link type="text/css" rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <form th:method="POST" th:action="@{/logout}">
+        <input type="submit" value="Logout">
+    </form>
+
+    <div class="info" th:object="${user}">
+        <div>
+            <form class="right-from-text" th:method="GET" th:action="@{/user/{id}/editUsername (id=${user.getIdUser()})}">
+                <input class="bottom-edit" type="image" src="/images/pencil.png">
+            </form>
+            <p th:text="'Username:  ' + ${user.username}"></p>
+
+        </div>
+
+        <div>
+            <form class="right-from-text" th:method="GET" th:action="@{/user/{id}/changePassword (id=${user.getIdUser()})}">
+                <input class="bottom-edit" type="image" src="/images/pencil.png">
+            </form>
+            <p th:text="'Password:  ' + ${password}"></p>
+        </div>
+
+        <p th:text="'Words added: ' + ${countCards}"></p>
+    </div>
+
+
+    <div class="divD">
+        <form th:method="DELETE" th:action="@{/user/{id}/delete (id=${user.getIdUser()})}">
+            <input type="submit" value="Delete"/>
+        </form>
+    </div>
+
+</body>
+</html>

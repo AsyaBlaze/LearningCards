@@ -11,12 +11,10 @@ import org.springframework.validation.Validator;
 @Component
 public class CardValidator implements Validator {
     private final CardService cardService;
-    private final GroupService groupService;
 
     @Autowired
-    public CardValidator(CardService cardService, GroupService groupService) {
+    public CardValidator(CardService cardService) {
         this.cardService = cardService;
-        this.groupService = groupService;
     }
 
     @Override
@@ -27,7 +25,7 @@ public class CardValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Card card = (Card) target;
-        if (cardService.findByWord(card.getWord()).isPresent()) {
+        if (cardService.findByWord(card.getWord()).isPresent() && cardService.findByWord(card.getWord()).get().getId() != card.getId()) {
             errors.rejectValue("word", "", "Card with this word is already created");
         }
     }
