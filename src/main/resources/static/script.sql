@@ -12,8 +12,26 @@ create table groups(
 	group_name varchar(36)
 );
 
-create table cards_data(
-	card_id int REFERENCES cards(id_card),
-	group_id int REFERENCES groups(id_group),
-	PRIMARY KEY (card_id, group_id)
+create table cards_groups(
+    id_card int REFERENCES cards(id_card),
+    id_group int REFERENCES groups(id_group),
+    PRIMARY KEY (id_card, id_group)
+);
+
+create table users(
+	id_user int REFERENCES users(id_user),
+	username varchar(18) CHECK (username >= 5),
+	password varchar
+);
+
+create table users_cards(
+    id_card int REFERENCES cards(id_card),
+    id_user int REFERENCES users(id_user),
+    PRIMARY KEY (id_card, id_user)
+);
+
+create table users_groups(
+    id_user int REFERENCES users(id_user),
+    id_group int REFERENCES groups(id_group),
+    PRIMARY KEY (id_group, id_user)
 );
