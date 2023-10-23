@@ -19,7 +19,6 @@ public class User {
     @Column(name = "username")
     private String username;
 
-//    @Size(max = 16, min = 8, message = "Password's length must be between 8 and 16")
     @Column(name = "password")
     private String password;
 
